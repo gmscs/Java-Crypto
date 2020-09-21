@@ -32,7 +32,8 @@ public class ImageRSACipher {
 
         try (
             FileInputStream in = new FileInputStream(inputFile);
-            FileOutputStream out = new FileOutputStream(outputFile)) {
+            FileOutputStream out = new FileOutputStream(outputFile)) 
+            {
                 byte[] inputBuffer = new byte[117];
                 int len = in.read(inputBuffer);
                 while(len >= 0) {
@@ -40,6 +41,8 @@ public class ImageRSACipher {
                     out.write(outputBuffer);
                     len = in.read(inputBuffer);
                 }
+                byte[] outputBuffer = cipher.doFinal();
+                out.write(outputBuffer);
             }
     }
 }

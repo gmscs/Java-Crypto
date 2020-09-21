@@ -13,7 +13,7 @@ public class ImageRSADecipher {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, Exception, InvalidKeyException {
 
         if(args.length != 3) {
-            System.err.println("This program encrypts an image file with RSA.");
+            System.err.println("This program decrypts an image file with RSA.");
             System.err.println("Usage: ImageRSACipher [inputFile.png] [RSAKeyFile] [outputFile.png]");
             return;
         }
@@ -32,7 +32,8 @@ public class ImageRSADecipher {
 
         try (
             FileInputStream in = new FileInputStream(inputFile);
-            FileOutputStream out = new FileOutputStream(outputFile)) {
+            FileOutputStream out = new FileOutputStream(outputFile)) 
+            {
                 byte[] inputBuffer = new byte[117];
                 int len = in.read(inputBuffer);
                 while(len >= 0) {
@@ -40,6 +41,8 @@ public class ImageRSADecipher {
                     out.write(outputBuffer);
                     len = in.read(inputBuffer);
                 }
+                byte[] outputBuffer = cipher.doFinal();
+                out.write(outputBuffer);
             }
     }
 }
