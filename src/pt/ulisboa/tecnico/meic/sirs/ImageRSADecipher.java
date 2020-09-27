@@ -34,7 +34,7 @@ public class ImageRSADecipher {
             FileInputStream in = new FileInputStream(inputFile);
             FileOutputStream out = new FileOutputStream(outputFile)) 
             {
-                byte[] inputBuffer = new byte[117];
+                byte[] inputBuffer = new byte[128];
                 int len = in.read(inputBuffer);
                 while(len >= 0) {
                     byte[] outputBuffer = cipher.update(inputBuffer, 0, len);

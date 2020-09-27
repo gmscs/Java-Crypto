@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Key;
+import java.security.MessageDigest;
 
 import static javax.xml.bind.DatatypeConverter.printHexBinary;
 
@@ -36,6 +37,8 @@ public class AESKeyGenerator {
 
     public static void write(String keyPath) throws GeneralSecurityException, IOException {
         // get an AES private key
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        //md.update(getSecretKey().getBytes("UTF-8"));
         System.out.println("Generating AES key ..." );
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(128);
@@ -44,7 +47,7 @@ public class AESKeyGenerator {
         byte[] encoded = key.getEncoded();
         System.out.println("Key:");
         System.out.println(printHexBinary(encoded));
-
+        md.update(encoded);
         System.out.println("Writing key to '" + keyPath + "' ..." );
 
         FileOutputStream fos = new FileOutputStream(keyPath);

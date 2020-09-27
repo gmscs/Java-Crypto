@@ -34,15 +34,21 @@ public class ImageRSACipher {
             FileInputStream in = new FileInputStream(inputFile);
             FileOutputStream out = new FileOutputStream(outputFile)) 
             {
-                byte[] inputBuffer = new byte[117];
+                byte[] inputBuffer = new byte[128];
                 int len = in.read(inputBuffer);
-                while(len >= 0) {
-                    byte[] outputBuffer = cipher.update(inputBuffer, 0, len);
-                    out.write(outputBuffer);
+                int t = 0;
+                while(len - t > 0) {
+                    if(len - t > 117) {
+                        byte[] outputBuffer = cipher.doFinal(inputBuffer, 0, 117);
+                        out.write(outputBuffer);
+                        t += 117;
+                    } else {
+                        byte[] outputBuffer = cipher.doFinal(inputBuffer, 0, len - t);
+                        out.write(outputBuffer);
+                        t = len;
+                    }
                     len = in.read(inputBuffer);
                 }
-                byte[] outputBuffer = cipher.doFinal();
-                out.write(outputBuffer);
             }
     }
 }
